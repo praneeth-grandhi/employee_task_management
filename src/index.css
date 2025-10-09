@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+*{
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #111;
+}
+
+#tasklist::-webkit-scrollbar {
+  display: none;
+}
