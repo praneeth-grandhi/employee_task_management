@@ -1,15 +1,17 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import AuthProvider from './context/AuthProvider.jsx';
+import AuthProvider from './context/AuthProvider.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
-
-createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root')
+createRoot(root).render(
   <StrictMode>
-    <AuthProvider>
-      <App />
-    
-    </AuthProvider>
-  </StrictMode>,
+    <ErrorBoundary>
+      <AuthProvider>
+        <App />    
+      </AuthProvider>
+    </ErrorBoundary>
+  </StrictMode>
 )
