@@ -6,17 +6,19 @@ const CreateTask = ({ onTaskCreate, users }) => {
   const [formData, setFormData] = useState({
     title: '',
     dueDate: '',
-    assignedTo: '',
+    assignedTo: [],
     category: '',
-    description: ''
+    description: '',
+    priority: 'medium'
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -30,9 +32,10 @@ const CreateTask = ({ onTaskCreate, users }) => {
       setFormData({
         title: '',
         dueDate: '',
-        assignedTo: '',
+        assignedTo: [],
         category: '',
-        description: ''
+        description: '',
+        priority: 'medium'
       });
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error creating task');
@@ -73,16 +76,37 @@ const CreateTask = ({ onTaskCreate, users }) => {
             <select
               name="assignedTo"
               value={formData.assignedTo}
-              onChange={handleChange}
+              onChange={(e) => {
+                const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+                setFormData(prev => ({
+                  ...prev,
+                  assignedTo: selectedOptions
+                }));
+              }}
               className='text-sm py-1 px-2 rounded w-4/5 outline-none bg-transparent border-[1px] border-gray-400 mb-4'
               required
+              multiple
+              size="4"
             >
-              <option value="">Select Employee</option>
               {users.map(user => (
                 <option key={user._id} value={user._id}>
                   {user.name} ({user.email})
                 </option>
               ))}
+            </select>
+          </div>
+          <div>
+            <h3 className='text-sm text-gray-300 mb-0.5'>Priority</h3>
+            <select
+              name="priority"
+              value={formData.priority}
+              onChange={handleChange}
+              className='text-sm py-1 px-2 rounded w-4/5 outline-none bg-transparent border-[1px] border-gray-400 mb-4'
+              required
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
             </select>
           </div>
           <div>

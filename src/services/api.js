@@ -46,8 +46,8 @@ export const getTasks = async () => {
   return response.data;
 };
 
-export const updateTaskStatus = async (taskId, status) => {
-  const response = await api.patch(`/tasks/${taskId}/status`, { status });
+export const updateTaskStatus = async (taskId, { status, assigneeId, notes }) => {
+  const response = await api.patch(`/tasks/${taskId}/status`, { status, assigneeId, notes });
   return response.data;
 };
 
